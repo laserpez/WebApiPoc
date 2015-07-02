@@ -3,9 +3,9 @@ using System.Web.Http.Routing;
 
 namespace WebApiPoc
 {
-    internal class VersionedRoute : RouteFactoryAttribute
+    internal class VersionedRouteAttribute : RouteFactoryAttribute
     {
-        public VersionedRoute(string template, int allowedVersion): base(template)
+        public VersionedRouteAttribute(string template, int allowedVersion): base(template)
         {
             AllowedVersion = allowedVersion;
         }
