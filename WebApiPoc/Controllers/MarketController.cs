@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -7,7 +6,7 @@ using System.Web.Http.Description;
 
 namespace WebApiPoc.Controllers
 {
-    [RoutePrefix("api/markets")]
+    [VersionedRoute("/api/market", 1)]
     public class MarketController : ApiController
     {
         private readonly IMarketRepository _marketRepository;
@@ -17,13 +16,11 @@ namespace WebApiPoc.Controllers
             _marketRepository = marketRepository;
         }
 
-        [Route("")]
         public IEnumerable<Market> Get()
         {
             return _marketRepository.GetAll();
         }
 
-        [Route("{id}")]
         [ResponseType(typeof(Market))]
         public HttpResponseMessage Get(HttpRequestMessage request, int id)
         {
@@ -33,8 +30,6 @@ namespace WebApiPoc.Controllers
                 : request.CreateResponse(HttpStatusCode.OK, market);
         }
 
-        // POST api/<controller>
-        [Route("{id}")]
         public HttpResponseMessage Post([FromBody]Market value)
         {
             var saved = _marketRepository.Store(value);
@@ -43,8 +38,6 @@ namespace WebApiPoc.Controllers
                 : new HttpResponseMessage(HttpStatusCode.Created);
         }
 
-        // PUT api/<controller>/5
-        [Route("{id}")]
         public HttpResponseMessage Put(int id, [FromBody]Market value)
         {
             var market = _marketRepository.Get(id);
@@ -55,8 +48,6 @@ namespace WebApiPoc.Controllers
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
-        // DELETE api/<controller>/5
-        [Route("{id}")]
         public HttpResponseMessage Delete(int id)
         {
             var result = _marketRepository.Delete(id);
