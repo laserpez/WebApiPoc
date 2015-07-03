@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiPoc", "WebApiPoc\WebApiPoc.csproj", "{B27528CF-724F-4A84-9EB3-2807BF3CACCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{4373B83A-AA9F-475E-AD25-28B271DFEADD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B27528CF-724F-4A84-9EB3-2807BF3CACCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B27528CF-724F-4A84-9EB3-2807BF3CACCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B27528CF-724F-4A84-9EB3-2807BF3CACCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4373B83A-AA9F-475E-AD25-28B271DFEADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4373B83A-AA9F-475E-AD25-28B271DFEADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4373B83A-AA9F-475E-AD25-28B271DFEADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4373B83A-AA9F-475E-AD25-28B271DFEADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

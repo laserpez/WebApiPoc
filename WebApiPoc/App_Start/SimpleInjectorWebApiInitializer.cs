@@ -31,13 +31,13 @@ namespace WebApiPoc.App_Start
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
         }
      
-        private static void InitializeContainer(Container container)
+        public static void InitializeContainer(Container container)
         {
             // For instance:
             container.RegisterWebApiRequest<IMarketRepository, FakeMarketRepository>();
         }
 
-        private static void InitializeRoutes(HttpConfiguration configuration)
+        public static void InitializeRoutes(HttpConfiguration configuration)
         {
             configuration.MapHttpAttributeRoutes();
         }

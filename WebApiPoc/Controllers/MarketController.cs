@@ -6,7 +6,7 @@ using System.Web.Http.Description;
 
 namespace WebApiPoc.Controllers
 {
-    [VersionedRoute("/api/market", 1)]
+    [VersionedRoute("api/markets", 1)]
     public class MarketController : ApiController
     {
         private readonly IMarketRepository _marketRepository;
