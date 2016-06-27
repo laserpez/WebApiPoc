@@ -30,7 +30,6 @@ namespace WebApiPoc.App_Start
             GlobalConfiguration.Configure(InitializeRoutes);
 
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
-            //GlobalConfiguration.Configuration.MessageHandlers.Add(new ETagHandler(container));
         }
      
         public static void InitializeContainer(Container container)

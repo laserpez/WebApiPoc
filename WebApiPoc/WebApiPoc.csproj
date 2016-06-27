@@ -108,7 +108,6 @@
     <Compile Include="App_Start\SimpleInjectorWebApiInitializer.cs" />
     <Compile Include="Controllers\ETagActionFilterAttribute.cs" />
     <Compile Include="Controllers\IETagGenerator.cs" />
-    <Compile Include="ETagHandler.cs" />
     <Compile Include="IMarketRepository.cs" />
     <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Formatters\JilFormatter.cs" />
