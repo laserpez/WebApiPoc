@@ -14,22 +14,22 @@ namespace WebApiPoc.Controllers
     {
         public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            if (actionContext.Request.Method == HttpMethod.Get)
+            if (actionContext.Request.Method != HttpMethod.Get) return base.OnActionExecutingAsync(actionContext, cancellationToken);
+            
+            var dependencyResolver = GlobalConfiguration.Configuration.DependencyResolver;
+            var etagGenerator = (IETagGenerator) dependencyResolver.GetService(typeof (IETagGenerator));
+            var marketRepository = (IMarketRepository) dependencyResolver.GetService(typeof (IMarketRepository));
+
+            var requestEtag = actionContext.Request.Headers.IfNoneMatch;
+            var lut = marketRepository.LastUpdateTime;
+            var generatedEtag = etagGenerator.GenerateEtag(lut.ToString("o"));
+
+            if (string.Equals(requestEtag.ToString(), generatedEtag.Tag))
             {
-                var etagGenerator = (IETagGenerator)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IETagGenerator));
-                var marketRepository = (IMarketRepository)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IMarketRepository));
-
-                var requestEtag = actionContext.Request.Headers.IfNoneMatch;
-                var lut = marketRepository.LastUpdateTime;
-                var generatedEtag = etagGenerator.GenerateEtag(lut.ToString("o"));
-
-                if (string.Equals(requestEtag.ToString(), generatedEtag.Tag))
-                {
-                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.NotModified);
-                    return base.OnActionExecutingAsync(actionContext, cancellationToken);
-                }
-                actionContext.Request.Properties.Add("etag", generatedEtag);
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.NotModified);
+                return base.OnActionExecutingAsync(actionContext, cancellationToken);
             }
+            actionContext.Request.Properties.Add("etag", generatedEtag);
             return base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
 
