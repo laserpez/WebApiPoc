@@ -6,7 +6,7 @@ namespace WebApiPoc
 {
     internal class FakeMarketRepository: IMarketRepository
     {
-        private ConcurrentDictionary<int, Market> _markets = new ConcurrentDictionary<int, Market>();
+        private readonly ConcurrentDictionary<int, Market> _markets = new ConcurrentDictionary<int, Market>();
 
         public DateTime LastUpdateTime { get; private set; }
 

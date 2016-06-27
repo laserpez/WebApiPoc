@@ -9,22 +9,10 @@ namespace WebApiPoc.Controllers
     public class MarketController : ApiController
     {
         private readonly IMarketRepository _marketRepository;
-        private readonly IETagGenerator _etagGenerator;
-
-        public IMarketRepository MarketRepository 
-        {
-            get { return _marketRepository; }
-        }
-
-        public IETagGenerator ETagGenerator
-        {
-            get { return _etagGenerator; }
-        }
 
         public MarketController(IMarketRepository marketRepository, IETagGenerator etagGenerator)
         {
             _marketRepository = marketRepository;
-            _etagGenerator = etagGenerator;
         }
 
         [Route("")]

@@ -1,8 +1,10 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -12,11 +14,14 @@ namespace WebApiPoc.Controllers
     {
         public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
+            var etagGenerator = (IETagGenerator) GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof (IETagGenerator));
+            var marketRepository = (IMarketRepository) GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof (IMarketRepository));
+
             if (actionContext.Request.Method == HttpMethod.Get)
             {
-                var controller = (MarketController) actionContext.ControllerContext.Controller;
                 var requestEtag = actionContext.Request.Headers.IfNoneMatch;
-                var generatedEtag = controller.ETagGenerator.GenerateEtag(controller.MarketRepository.LastUpdateTime.ToString("o"));
+                var lut = marketRepository.LastUpdateTime;
+                var generatedEtag = etagGenerator.GenerateEtag(lut.ToString("o"));
 
                 if (string.Equals(requestEtag.ToString(), generatedEtag.Tag))
                 {
@@ -32,6 +37,7 @@ namespace WebApiPoc.Controllers
         {
             if (actionExecutedContext.Request.Properties.ContainsKey("etag"))
                 actionExecutedContext.Response.Headers.ETag = (EntityTagHeaderValue) actionExecutedContext.Request.Properties["etag"];
+            actionExecutedContext.Response.Headers.Date = DateTimeOffset.Now;
             
             return base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
         }
