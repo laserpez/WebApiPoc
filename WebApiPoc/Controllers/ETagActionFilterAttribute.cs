@@ -14,11 +14,11 @@ namespace WebApiPoc.Controllers
     {
         public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            var etagGenerator = (IETagGenerator) GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof (IETagGenerator));
-            var marketRepository = (IMarketRepository) GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof (IMarketRepository));
-
             if (actionContext.Request.Method == HttpMethod.Get)
             {
+                var etagGenerator = (IETagGenerator)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IETagGenerator));
+                var marketRepository = (IMarketRepository)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IMarketRepository));
+
                 var requestEtag = actionContext.Request.Headers.IfNoneMatch;
                 var lut = marketRepository.LastUpdateTime;
                 var generatedEtag = etagGenerator.GenerateEtag(lut.ToString("o"));
