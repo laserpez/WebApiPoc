@@ -7,7 +7,7 @@ namespace WebApiPoc
 {
     internal class FakeMarketRepository: IMarketRepository
     {
-        private static readonly ConcurrentBag<Market> _markets = new ConcurrentBag<Market>();
+        private ConcurrentDictionary<int, Market> _markets = new ConcurrentDictionary<int, Market>();
 
         public DateTime LastUpdateTime { get; private set; }
 
@@ -18,35 +18,33 @@ namespace WebApiPoc
 
         public IEnumerable<Market> GetAll()
         {
-            return _markets;
+            return _markets.Values;
         }
 
         public Market Get(int id)
         {
-            var found =
-                from m in _markets
-                where m.Id == id
-                select m;
-
-            var result = found.FirstOrDefault();
-            return result;
+            Market market;
+            _markets.TryGetValue(id, out market);
+            return market;
         }
 
         public bool Store(Market market)
         {
-            var first = _markets.FirstOrDefault(m => m.Id == market.Id);
-            if (first == null)
-            {
-                _markets.Add(market);
-                LastUpdateTime = DateTime.Now;
-            }
-            return first == null;
+            var r = _markets.TryAdd(market.Id, market);
+            if (!r) return false;
+            
+            LastUpdateTime = DateTime.Now;
+            return true;
         }
 
         public bool Delete(int id)
         {
-            var market = Get(id);
-            return market != null;
+            Market market;
+            var r = _markets.TryRemove(id, out market);
+            if (!r) return false;
+
+            LastUpdateTime = DateTime.Now;
+            return true;
         }
     }
 }
