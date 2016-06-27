@@ -114,8 +114,6 @@
     <Compile Include="Formatters\JilFormatter.cs" />
     <Compile Include="Market.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VersionConstraint.cs" />
-    <Compile Include="VersionedRouteAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
