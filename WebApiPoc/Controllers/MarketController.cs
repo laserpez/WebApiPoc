@@ -1,27 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace WebApiPoc.Controllers
 {
+    [ETagActionFilter]
     [VersionedRoute("api/markets", 1)]
     public class MarketController : ApiController
     {
         private readonly IMarketRepository _marketRepository;
+        private readonly IETagGenerator _etagGenerator;
 
-        public MarketController(IMarketRepository marketRepository)
+        public IMarketRepository MarketRepository 
+        {
+            get { return _marketRepository; }
+        }
+
+        public IETagGenerator ETagGenerator
+        {
+            get { return _etagGenerator; }
+        }
+
+        public MarketController(IMarketRepository marketRepository, IETagGenerator etagGenerator)
         {
             _marketRepository = marketRepository;
+            _etagGenerator = etagGenerator;
         }
 
-        public IEnumerable<Market> Get()
+        public HttpResponseMessage Get(HttpRequestMessage request)
         {
-            return _marketRepository.GetAll();
+            var _ = request.CreateResponse(HttpStatusCode.OK, _marketRepository.GetAll());
+            return _;
         }
 
-        [ResponseType(typeof(Market))]
         public HttpResponseMessage Get(HttpRequestMessage request, int id)
         {
             var market = _marketRepository.Get(id);

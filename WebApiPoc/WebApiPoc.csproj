@@ -104,7 +104,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FakeMarketRepository.cs" />
+    <Compile Include="App_Start\SimpleETagGenerator.cs" />
     <Compile Include="App_Start\SimpleInjectorWebApiInitializer.cs" />
+    <Compile Include="Controllers\ETagActionFilterAttribute.cs" />
+    <Compile Include="Controllers\IETagGenerator.cs" />
+    <Compile Include="ETagHandler.cs" />
     <Compile Include="IMarketRepository.cs" />
     <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Formatters\JilFormatter.cs" />
@@ -121,6 +125,9 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ActionFilters\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using NUnit.Framework;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using WebApiPoc;
 using WebApiPoc.App_Start;
-using WebApiPoc.Controllers;
 
 namespace IntegrationTests
 {

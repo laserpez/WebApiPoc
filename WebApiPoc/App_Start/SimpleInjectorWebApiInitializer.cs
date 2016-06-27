@@ -1,5 +1,4 @@
-using System.Linq;
-using Jil;
+using WebApiPoc.Controllers;
 using WebApiPoc.Formatters;
 
 [assembly: WebActivator.PostApplicationStartMethod(typeof(WebApiPoc.App_Start.SimpleInjectorWebApiInitializer), "Initialize")]
@@ -29,12 +28,14 @@ namespace WebApiPoc.App_Start
             GlobalConfiguration.Configure(InitializeRoutes);
 
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
+            //GlobalConfiguration.Configuration.MessageHandlers.Add(new ETagHandler(container));
         }
      
         public static void InitializeContainer(Container container)
         {
             // For instance:
-            container.RegisterWebApiRequest<IMarketRepository, FakeMarketRepository>();
+            container.RegisterSingle<IMarketRepository, FakeMarketRepository>();
+            container.RegisterSingle<IETagGenerator, SimpleETagGenerator>();
         }
 
         public static void InitializeRoutes(HttpConfiguration configuration)

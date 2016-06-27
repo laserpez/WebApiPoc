@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WebApiPoc
 {
@@ -8,5 +9,7 @@ namespace WebApiPoc
         Market Get(int id);
         bool Store(Market market);
         bool Delete(int id);
+
+        DateTime LastUpdateTime { get; }
     }
 }
