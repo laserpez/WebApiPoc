@@ -14,16 +14,16 @@ namespace WebApiPoc.ActionFilters
 {
     public class ETagActionFilterAttribute : ActionFilterAttribute
     {
-        private const string ETagKey = "etag";
-
-        private readonly IDependencyResolver _dependencyResolver = GlobalConfiguration.Configuration.DependencyResolver;
+        private const string ETagKey = "ETag";
 
         public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
             if (actionContext.Request.Method == HttpMethod.Get)
             {
-                var etagGenerator = _dependencyResolver.Resolve<IETagGenerator>();
-                var marketRepository = _dependencyResolver.Resolve<IMarketRepository>();
+                var dependencyResolver = actionContext.ControllerContext.Configuration.DependencyResolver;
+
+                var etagGenerator = dependencyResolver.Resolve<IETagGenerator>();
+                var marketRepository = dependencyResolver.Resolve<IMarketRepository>();
 
                 var requestEtag = actionContext.Request.Headers.IfNoneMatch;
                 var lut = marketRepository.LastUpdateTime;

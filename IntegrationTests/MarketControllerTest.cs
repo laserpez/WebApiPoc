@@ -35,14 +35,14 @@ namespace IntegrationTests
         }
 
         [TestCase("http://localhost/api/markets")]
-        public void shall_return_OK(string url)
+        public async void shall_return_OK(string url)
         {
             var client = new HttpClient(_server);
             var result = client.GetAsync(url)
                 .GetAwaiter()
                 .GetResult();
 
-            var markets = result.Content.ReadAsAsync<IEnumerable<Market>>().Result;
+            var markets = await result.Content.ReadAsAsync<Market[]>();
             Assert.That(markets, Is.Empty);
         }
     }
